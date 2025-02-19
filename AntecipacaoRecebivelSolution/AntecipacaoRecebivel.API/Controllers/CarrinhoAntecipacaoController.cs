@@ -21,6 +21,5 @@ namespace AntecipacaoRecebivel.API.Controllers
         {
             return _carrinhoAntecipacaoRepository.Calcular(cnpj);
         }
-
     }
 }

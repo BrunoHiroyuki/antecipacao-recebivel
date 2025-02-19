@@ -2,6 +2,7 @@
 using AntecipacaoRecebivel.Infrastructure.Data.Interfaces;
 using AntecipacaoRecebivel.Infrastructure.Data.Models;
 using AntecipacaoRecebivel.Infrastructure.Data.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace AntecipacaoRecebivel.Infrastructure.Data.Repositories
 
         public IEnumerable<EmpresaViewModel> Listar()
         {
-            return _dbContext.Empresas.Select(s => new EmpresaViewModel
+            return _dbContext.Empresas.AsNoTracking().Select(s => new EmpresaViewModel
             {
                 Cnpj = s.Cnpj,
                 FaturamentoMensal = s.FaturamentoMensal,
@@ -32,6 +33,9 @@ namespace AntecipacaoRecebivel.Infrastructure.Data.Repositories
 
         public void Cadastrar(Empresa empresa)
         {
+            var empresaExistente = _dbContext.Empresas.AsNoTracking().FirstOrDefault(f => f.Cnpj == empresa.Cnpj);
+            if (empresaExistente != null) throw new Exception("Empresa já cadastrada com este CNPJ");
+
             _dbContext.Empresas.Add(empresa);
             _dbContext.SaveChanges();
         }

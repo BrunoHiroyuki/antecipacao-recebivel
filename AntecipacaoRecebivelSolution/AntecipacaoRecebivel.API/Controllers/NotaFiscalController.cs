@@ -1,5 +1,6 @@
 ﻿using AntecipacaoRecebivel.Infrastructure.Data.Interfaces;
 using AntecipacaoRecebivel.Infrastructure.Data.Models;
+using AntecipacaoRecebivel.Infrastructure.Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AntecipacaoRecebivel.API.Controllers
@@ -18,12 +19,20 @@ namespace AntecipacaoRecebivel.API.Controllers
         /// <summary>
         /// Cadastra Notas Fiscais
         /// </summary>
-        /// <param name="notaFiscal"></param>
+        /// <param name="notaFiscalVM"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("Cadastrar")]
-        public IActionResult Cadastrar([FromBody] NotaFiscal notaFiscal)
+        public IActionResult Cadastrar([FromBody] NotaFiscalViewModel notaFiscalVM)
         {
+            var notaFiscal = new NotaFiscal() 
+            { 
+                Numero = notaFiscalVM.Numero,
+                EmpresaCNPJ = notaFiscalVM.EmpresaCNPJ,
+                Valor = notaFiscalVM.Valor,
+                Vencimento = notaFiscalVM.Vencimento,
+            };
+
             _notaFiscalRepository.Cadastrar(notaFiscal);
             return Ok();
         }
