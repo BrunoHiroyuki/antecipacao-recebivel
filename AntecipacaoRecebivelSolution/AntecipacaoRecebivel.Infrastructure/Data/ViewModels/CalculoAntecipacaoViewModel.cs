@@ -56,18 +56,20 @@ namespace AntecipacaoRecebivel.Infrastructure.Data.ViewModels
         {
             get
             {
-                return ValorBruto - Desagio;
+                return Math.Round(ValorBruto - ((decimal)Desagio), 2);
             }
         }
 
         [JsonIgnore]
         public DateTime Vencimento { get; set; } = DateTime.Today;
 
+        [JsonIgnore]
         public int Prazo
         {
             get
             {
-                return (DateTime.Today - Vencimento.Date).Days;
+                var prazo = (DateTime.Today - Vencimento.Date).Days;
+                return prazo < 0 ? prazo * -1 : prazo;
             }
         }
 
@@ -75,11 +77,11 @@ namespace AntecipacaoRecebivel.Infrastructure.Data.ViewModels
         public static double Taxa => 0.0465;
 
         [JsonIgnore]
-        public decimal Desagio
+        public double Desagio
         {
             get
             {
-                return (decimal)((double)ValorBruto / ((1 + Taxa) * (Prazo / 30)));
+                return ((double)ValorBruto) / Math.Pow(1 + Taxa, Prazo / 30.0);
             }
         }
     }

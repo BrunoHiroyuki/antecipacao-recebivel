@@ -25,16 +25,23 @@ namespace AntecipacaoRecebivel.API.Controllers
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody] NotaFiscalViewModel notaFiscalVM)
         {
-            var notaFiscal = new NotaFiscal() 
-            { 
-                Numero = notaFiscalVM.Numero,
-                EmpresaCNPJ = notaFiscalVM.EmpresaCNPJ,
-                Valor = notaFiscalVM.Valor,
-                Vencimento = notaFiscalVM.Vencimento,
-            };
+            try
+            {
+                var notaFiscal = new NotaFiscal() 
+                { 
+                    Numero = notaFiscalVM.Numero,
+                    EmpresaCNPJ = notaFiscalVM.EmpresaCNPJ,
+                    Valor = notaFiscalVM.Valor,
+                    Vencimento = notaFiscalVM.Vencimento,
+                };
 
-            _notaFiscalRepository.Cadastrar(notaFiscal);
-            return Ok();
+                _notaFiscalRepository.Cadastrar(notaFiscal);
+                return Ok("Nota Fiscal cadastrada com sucesso");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -46,8 +53,15 @@ namespace AntecipacaoRecebivel.API.Controllers
         [Route("Remover/{numeroNotaFiscal}")]
         public IActionResult Remover(int numeroNotaFiscal)
         {
-            _notaFiscalRepository.Remover(numeroNotaFiscal);
-            return Ok();
+            try
+            {
+                _notaFiscalRepository.Remover(numeroNotaFiscal);
+                return Ok("Nota Fiscal removida com sucesso");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

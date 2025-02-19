@@ -13,6 +13,7 @@ namespace AntecipacaoRecebivel.Infrastructure.Data.Models
     {
         [Key]
         [Range(1, int.MaxValue, ErrorMessage = "Número da nota deve ser maior que zero")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Numero { get; set; }
 
         [Required(ErrorMessage = "CNPJ da empresa é obrigatório")]

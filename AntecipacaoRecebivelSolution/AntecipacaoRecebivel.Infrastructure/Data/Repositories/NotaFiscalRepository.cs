@@ -21,6 +21,10 @@ namespace AntecipacaoRecebivel.Infrastructure.Data.Repositories
 
         public void Cadastrar(NotaFiscal notaFiscal)
         {
+            // Verifica se já existe uma nota com o mesmo número no banco
+            var notaFiscalNumero = _dbContext.NotasFiscais.AsNoTracking().FirstOrDefault(a => a.Numero == notaFiscal.Numero);
+            if(notaFiscalNumero != null) throw new Exception("Já existe uma Nota Fiscal cadastrada com esse número");
+
             // Fazemos a busca se a empresa já está cadastrada no banco
             var empresa = _dbContext.Empresas.AsNoTracking().FirstOrDefault(f => f.Cnpj == notaFiscal.EmpresaCNPJ) ?? throw new Exception("Empresa não cadastrada na base ou CNPJ inválido");
 

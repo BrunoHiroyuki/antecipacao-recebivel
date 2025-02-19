@@ -25,23 +25,30 @@ namespace AntecipacaoRecebivel.API.Controllers
         [Route("Cadastrar")]
         public IActionResult Cadastrar([FromBody]EmpresaViewModel empresaVM)
         {
-            // Verifica se a string do campo Ramo corresponde aos valores registrados no enum
-            if (Enum.TryParse(empresaVM.Ramo, true, out Empresa.TipoRamo ramo))
+            try
             {
-                var empresa = new Empresa()
+                // Verifica se a string do campo Ramo corresponde aos valores registrados no enum
+                if (Enum.TryParse(empresaVM.Ramo, true, out Empresa.TipoRamo ramo))
                 {
-                    Cnpj = empresaVM.Cnpj,
-                    FaturamentoMensal = empresaVM.FaturamentoMensal,
-                    Nome = empresaVM.Nome,
-                    Ramo = ramo,
-                };
+                    var empresa = new Empresa()
+                    {
+                        Cnpj = empresaVM.Cnpj,
+                        FaturamentoMensal = empresaVM.FaturamentoMensal,
+                        Nome = empresaVM.Nome,
+                        Ramo = ramo,
+                    };
 
-                _empresaRepository.Cadastrar(empresa);
-                return Ok();
+                    _empresaRepository.Cadastrar(empresa);
+                    return Ok("Empresa cadastrada com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Ramo da empresa inválido. O ramo deve ser de Produtos ou Serviços");
+                }
             }
-            else
+            catch (Exception ex) 
             {
-                return BadRequest("Ramo da empresa inválido. O ramo deve ser de Produtos ou Serviços");
+                return BadRequest(ex.Message);
             }
         }
 

@@ -6,23 +6,22 @@ A API consiste no cadastro de empresas e notas fiscais para cálculo de antecipa
 
 ## 🚀 Tecnologias Utilizadas
 
-- .NET 6
+- .NET 8 C#
 - ASP.NET Web API
 - Entity Framework Core
 - SQL Server
 
-## 📌 Funcionalidades
+## 🪄 Funcionalidades
 
 - **Cadastro de Empresas**
 - **Cadastro de Notas Fiscais**
 - **Cálculo do Limite de Crédito**
-- **Gerenciamento do Carrinho de Antecipação**
 - **Cálculo de Antecipação (Checkout)**
 
 ## 🔄 Fluxo da Aplicação
 
-1. **Cadastro da Empresa**: A empresa deve ser cadastrada informando CNPJ, nome, faturamento mensal e ramo de atuação.
-2. **Cadastro de Notas Fiscais**: Após o cadastro da empresa, ela pode registrar notas fiscais informando número, valor e data de vencimento.
+1. **Cadastro da Empresa**: A empresa deve ser cadastrada informando CNPJ, Nome, Faturamento Mensal e Ramo de Atuação.
+2. **Cadastro de Notas Fiscais**: Após o cadastro da empresa, ela pode registrar notas fiscais informando Número, CNPJ da Empresa, Valor e Data de Vencimento.
 3. **Gerenciamento do Carrinho**: A empresa pode adicionar ou remover notas fiscais do carrinho de antecipação.
 4. **Cálculo da Antecipação**: Com base nas notas fiscais  e no limite de crédito da empresa, a API calcula o valor final de antecipação de cada nota e o valor total do carrinho.
 
@@ -49,7 +48,7 @@ A API consiste no cadastro de empresas e notas fiscais para cálculo de antecipa
 
 ### 📌 Remover Nota Fiscal
 
-**GET** `/NotaFiscal/Remover/{numeroNotaFiscal}`
+**POST** `/NotaFiscal/Remover/{numeroNotaFiscal}`
 
 - Remove a Nota Fiscal do banco de dados utilizando o número da nota.
 
