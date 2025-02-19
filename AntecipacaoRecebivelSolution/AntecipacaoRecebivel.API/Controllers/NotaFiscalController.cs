@@ -27,5 +27,18 @@ namespace AntecipacaoRecebivel.API.Controllers
             _notaFiscalRepository.Cadastrar(notaFiscal);
             return Ok();
         }
+
+        /// <summary>
+        /// Remove Notas Fiscais
+        /// </summary>
+        /// <param name="notaFiscal"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("Remover/{numeroNotaFiscal}")]
+        public IActionResult Remover(int numeroNotaFiscal)
+        {
+            _notaFiscalRepository.Remover(numeroNotaFiscal);
+            return Ok();
+        }
     }
 }

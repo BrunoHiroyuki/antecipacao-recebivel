@@ -1,5 +1,6 @@
 ﻿using AntecipacaoRecebivel.Infrastructure.Data.Interfaces;
 using AntecipacaoRecebivel.Infrastructure.Data.Models;
+using AntecipacaoRecebivel.Infrastructure.Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AntecipacaoRecebivel.API.Controllers
@@ -16,7 +17,7 @@ namespace AntecipacaoRecebivel.API.Controllers
         }
 
         /// <summary>
-        /// Cadastra Empresa
+        /// Cadastra Empresa na base
         /// </summary>
         /// <param name="empresa"></param>
         /// <returns></returns>
@@ -26,6 +27,18 @@ namespace AntecipacaoRecebivel.API.Controllers
         {
             _empresaRepository.Cadastrar(empresa);
             return Ok();
+        }
+
+        /// <summary>
+        /// Lista todas as empresas cadastradas na base
+        /// </summary>
+        /// <param name="empresa"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Listar")]
+        public IEnumerable<EmpresaViewModel> Listar()
+        {
+            return _empresaRepository.Listar();
         }
     }
 }
